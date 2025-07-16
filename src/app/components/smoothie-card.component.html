@@ -1,0 +1,26 @@
+<div class="smoothie-card">
+  <div class="card-header">
+    <h2 class="smoothie-name">{{ smoothie().name }}</h2>
+    <div class="smoothie-meta">
+      <span class="category">{{ smoothie().category }}</span>
+      <span class="difficulty">{{ smoothie().difficulty }}</span>
+      <span class="prep-time">{{ smoothie().prepTime }}</span>
+    </div>
+  </div>
+
+  <div class="card-content">
+    <div class="ingredients-section">
+      <h3>Zutaten</h3>
+      <ul class="ingredients-list">
+        @for (ingredient of smoothie().ingredients; track ingredient) {
+          <li class="ingredient">{{ ingredient }}</li>
+        }
+      </ul>
+    </div>
+
+    <div class="instructions-section">
+      <h3>Zubereitung</h3>
+      <p class="instructions">{{ smoothie().instructions }}</p>
+    </div>
+  </div>
+</div> 

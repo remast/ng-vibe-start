@@ -1,0 +1,25 @@
+<div class="home-container">
+  <header class="hero-section">
+    <h1 class="main-title">🍹 Smoothie Frühstück</h1>
+    <p class="subtitle">Entdecke gesunde und leckere Smoothie-Rezepte für dein perfektes Frühstück</p>
+  </header>
+
+  <main class="main-content">
+    @if (currentSmoothie(); as smoothie) {
+      <app-smoothie-card [smoothie]="smoothie" />
+    }
+
+    <div class="action-section">
+      <button 
+        class="new-smoothie-btn"
+        (click)="getNewSmoothie()"
+        type="button">
+        🎲 Neuen Smoothie entdecken
+      </button>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Alle Smoothies sind ohne Kokos und perfekt für ein gesundes Frühstück!</p>
+  </footer>
+</div> 

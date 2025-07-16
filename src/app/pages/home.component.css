@@ -1,0 +1,102 @@
+.home-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 40px 20px;
+}
+
+.main-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #2d3748;
+  margin: 0 0 16px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #4a5568;
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.main-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.action-section {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.new-smoothie-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.new-smoothie-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.new-smoothie-btn:active {
+  transform: translateY(0);
+}
+
+.footer {
+  text-align: center;
+  margin-top: 60px;
+  padding: 20px;
+  color: #4a5568;
+  font-size: 0.875rem;
+}
+
+.footer p {
+  margin: 0;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 12px 24px;
+  border-radius: 25px;
+  display: inline-block;
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 10px;
+  }
+  
+  .hero-section {
+    padding: 20px 10px;
+    margin-bottom: 20px;
+  }
+  
+  .main-title {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .new-smoothie-btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+} 
