@@ -1,0 +1,14 @@
+---
+alwaysApply: true
+---
+
+Das Angular Projekt Layout soll sein:
+- services, für Logik und Zustand
+- pages, für Komponenten die über Routen erreichbar sind
+- components, für wiederverwendbare Komponenten
+
+In Angular ist mir wichtig:
+- Nutze Signals
+- Halte Zustand in den Services
+- Nutze Angulars neue Template Syntax
+- Templates in eigene Dateien auslagern
