@@ -1,0 +1,40 @@
+{
+    "id": "5ebc9644-c6b7-4bd4-8c12-8878cc912f53",
+    "slug": "americano",
+    "name": "Americano",
+    "glass": "old-fashioned",
+    "category": "Before Dinner Cocktail",
+    "garnish": "Half an orange slice",
+    "preparation": "Build into old fashioned glass filled with ice cubes. Add a splash of soda water.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Americano_-_panoramio.jpg",
+    "ingredients": [
+      {
+        "position": 1,
+        "amount": 3,
+        "unit": "cl",
+        "label": null,
+        "special": null,
+        "base_ingredient": {
+          "id": "00000000-0000-0000-0000-000000000007",
+          "slug": "campari",
+          "name": "Campari",
+          "abv": 25,
+          "taste": null
+        }
+      },
+      {
+        "position": 2,
+        "amount": 3,
+        "unit": "cl",
+        "label": "Red vermouth",
+        "special": null,
+        "base_ingredient": {
+          "id": "00000000-0000-0000-0000-000000000049",
+          "slug": "vermouth",
+          "name": "Vermouth",
+          "abv": 17,
+          "taste": null
+        }
+      }
+    ]
+  }

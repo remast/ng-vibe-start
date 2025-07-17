@@ -1,5 +1,28 @@
 import { Injectable, signal, computed } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, map, of } from 'rxjs';
 
+// Neue Interfaces basierend auf der tatsächlichen API-Struktur
+export interface ApiSmoothie {
+  id: number;
+  name: string;
+  kategorie: string;
+  zutaten: string[];
+  zubereitung: string;
+  portionen: number;
+  kalorien: number;
+  zubereitungszeit: string;
+  naehrwerte: Naehrwerte;
+}
+
+export interface Naehrwerte {
+  ballaststoffe: string;
+  fett: string;
+  kohlenhydrate: string;
+  protein: string;
+}
+
+// Bestehende Interface für lokale Smoothies
 export interface Smoothie {
   id: number;
   name: string;
@@ -15,6 +38,8 @@ export interface Smoothie {
   providedIn: 'root'
 })
 export class SmoothieService {
+  private readonly apiUrl = 'https://smoothie-api-959185784025.europe-west1.run.app/api/smoothies/random';
+  
   private readonly smoothies = signal<Smoothie[]>([
     {
       id: 1,
@@ -109,9 +134,72 @@ export class SmoothieService {
   ]);
 
   private currentSmoothie = signal<Smoothie | null>(null);
+  private currentApiSmoothie = signal<ApiSmoothie | null>(null);
+  private isLoading = signal<boolean>(false);
+  private error = signal<string | null>(null);
 
   readonly randomSmoothie = computed(() => this.currentSmoothie());
+  readonly randomApiSmoothie = computed(() => this.currentApiSmoothie());
+  readonly loading = computed(() => this.isLoading());
+  readonly errorMessage = computed(() => this.error());
 
+  constructor(private http: HttpClient) {}
+
+  // Neue Methode für API-Aufruf
+  fetchRandomSmoothie(): Observable<ApiSmoothie> {
+    this.isLoading.set(true);
+    this.error.set(null);
+    
+    return this.http.get<ApiSmoothie>(this.apiUrl).pipe(
+      map(smoothie => {
+        this.currentApiSmoothie.set(smoothie);
+        this.isLoading.set(false);
+        return smoothie;
+      }),
+      catchError(err => {
+        console.error('Fehler beim Laden des Smoothies:', err);
+        this.error.set('Fehler beim Laden des Smoothies. Bitte versuche es erneut.');
+        this.isLoading.set(false);
+        return of(null as any);
+      })
+    );
+  }
+
+  // Methode um API-Smoothie in lokales Format zu konvertieren
+  convertApiSmoothieToLocal(apiSmoothie: ApiSmoothie): Smoothie {
+    // Extrahiere die Zubereitungszeit als Zahl
+    const prepTimeMatch = apiSmoothie.zubereitungszeit.match(/(\d+)/);
+    const prepTime = prepTimeMatch ? parseInt(prepTimeMatch[1]) : 5;
+
+    // Mappe Kategorien
+    const categoryMap: { [key: string]: 'Frühstück' | 'Energie' | 'Erfrischung' | 'Gesundheit' } = {
+      'Grün': 'Gesundheit',
+      'Früchte': 'Energie',
+      'Protein': 'Energie',
+      'Beeren': 'Frühstück',
+      'Tropisch': 'Erfrischung',
+      'Gemüse': 'Gesundheit'
+    };
+
+    return {
+      id: apiSmoothie.id,
+      name: apiSmoothie.name,
+      ingredients: apiSmoothie.zutaten,
+      instructions: apiSmoothie.zubereitung,
+      prepTime: prepTime,
+      difficulty: this.getDifficultyByPrepTime(prepTime),
+      category: categoryMap[apiSmoothie.kategorie] || 'Gesundheit',
+      imageUrl: undefined // API liefert keine Bilder
+    };
+  }
+
+  private getDifficultyByPrepTime(prepTime: number): 'Einfach' | 'Mittel' | 'Schwer' {
+    if (prepTime <= 5) return 'Einfach';
+    if (prepTime <= 10) return 'Mittel';
+    return 'Schwer';
+  }
+
+  // Bestehende Methoden
   getRandomSmoothie(): void {
     const smoothies = this.smoothies();
     const randomIndex = Math.floor(Math.random() * smoothies.length);

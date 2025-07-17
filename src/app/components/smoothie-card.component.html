@@ -1,0 +1,99 @@
+@if (smoothie()) {
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden max-w-md mx-auto">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-green-400 to-blue-500 p-6 text-white">
+      <h2 class="text-2xl font-bold mb-2">{{ smoothie()!.name }}</h2>
+      <div class="flex items-center gap-4 text-sm">
+        <span class="flex items-center gap-1">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+          </svg>
+          {{ smoothie()!.prepTime }} Min
+        </span>
+        <span class="flex items-center gap-1">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          {{ smoothie()!.difficulty }}
+        </span>
+        <span class="bg-white/20 px-2 py-1 rounded-full text-xs">
+          {{ smoothie()!.category }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-6">
+      <!-- API Info Section -->
+      @if (apiSmoothie()) {
+        <div class="mb-6 bg-gray-50 rounded-lg p-4">
+          <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <svg class="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Nährwerte (API-Daten)
+          </h3>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div class="text-center">
+              <div class="text-2xl font-bold text-purple-600">{{ apiSmoothie()!.kalorien }}</div>
+              <div class="text-gray-600">Kalorien</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-blue-600">{{ apiSmoothie()!.portionen }}</div>
+              <div class="text-gray-600">Portionen</div>
+            </div>
+          </div>
+          
+          <!-- Nährwerte Details -->
+          <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
+            <div class="bg-white rounded p-2 text-center">
+              <div class="font-semibold text-gray-800">{{ apiSmoothie()!.naehrwerte.protein }}</div>
+              <div class="text-gray-600">Protein</div>
+            </div>
+            <div class="bg-white rounded p-2 text-center">
+              <div class="font-semibold text-gray-800">{{ apiSmoothie()!.naehrwerte.kohlenhydrate }}</div>
+              <div class="text-gray-600">Kohlenhydrate</div>
+            </div>
+            <div class="bg-white rounded p-2 text-center">
+              <div class="font-semibold text-gray-800">{{ apiSmoothie()!.naehrwerte.fett }}</div>
+              <div class="text-gray-600">Fett</div>
+            </div>
+            <div class="bg-white rounded p-2 text-center">
+              <div class="font-semibold text-gray-800">{{ apiSmoothie()!.naehrwerte.ballaststoffe }}</div>
+              <div class="text-gray-600">Ballaststoffe</div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Zutaten -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+          <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+          </svg>
+          Zutaten
+        </h3>
+        <ul class="space-y-2">
+          @for (ingredient of smoothie()!.ingredients; track ingredient) {
+            <li class="flex items-center gap-2 text-gray-700">
+              <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+              {{ ingredient }}
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Zubereitung -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+          <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          Zubereitung
+        </h3>
+        <p class="text-gray-700 leading-relaxed">{{ smoothie()!.instructions }}</p>
+      </div>
+    </div>
+  </div>
+} 
